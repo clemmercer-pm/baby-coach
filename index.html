@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Baby Coach — your week-by-week roadmap</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app__header">
+      <h1>Baby Coach</h1>
+      <p class="app__tagline">Always know what's coming next.</p>
+    </header>
+
+    <!-- Due-date setup (shown until a date is saved) -->
+    <section id="setup" class="card setup" hidden>
+      <label for="dueDate" class="setup__label">When's your due date?</label>
+      <input type="date" id="dueDate" class="setup__input" />
+      <button id="saveDate" class="btn">Show my roadmap</button>
+      <p class="setup__hint">Stored only in this browser. Nothing leaves your device.</p>
+    </section>
+
+    <!-- The roadmap (shown once a date is saved) -->
+    <section id="roadmap" class="roadmap" hidden>
+      <p id="stageLine" class="stage-line"></p>
+
+      <article id="thisWeek" class="card this-week">
+        <h2 class="card__eyebrow">This week</h2>
+        <h3 id="thisWeekLabel" class="card__title"></h3>
+        <div id="thisWeekBody" class="focus"></div>
+      </article>
+
+      <h2 class="section-heading">Coming up next</h2>
+      <div id="comingUp" class="coming-up"></div>
+
+      <button id="changeDate" class="btn btn--ghost">Change due date</button>
+    </section>
+  </main>
+
+  <footer class="app__footer">
+    <p>Guidance is general and NHS-informed — it never replaces your midwife, health visitor, or GP.</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
