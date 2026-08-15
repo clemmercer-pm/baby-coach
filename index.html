@@ -15,7 +15,11 @@
 
     <!-- Due-date setup (shown until a date is saved) -->
     <section id="setup" class="card setup" hidden>
-      <label for="dueDate" class="setup__label">When's your due date?</label>
+      <div class="toggle" role="group" aria-label="Which stage are you at?">
+        <button type="button" class="toggle__btn is-active" data-mode="pregnancy">I'm pregnant</button>
+        <button type="button" class="toggle__btn" data-mode="born">Baby's arrived</button>
+      </div>
+      <label for="dueDate" class="setup__label" id="dateLabel">When's your due date?</label>
       <input type="date" id="dueDate" class="setup__input" />
       <button id="saveDate" class="btn">Show my roadmap</button>
       <p class="setup__hint">Stored only in this browser. Nothing leaves your device.</p>

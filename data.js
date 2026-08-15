@@ -40,6 +40,13 @@ const TIMELINE = [
     note:  ["PLACEHOLDER"],
   },
   {
+    phase: "newborn", week: 0,
+    label: "The first few days",
+    do:    ["PLACEHOLDER — skin-to-skin; first feeds; register the birth"],
+    watch: ["PLACEHOLDER — meconium then wet/dirty nappies; feeding cues"],
+    note:  ["PLACEHOLDER — birth weight; who visited/what the midwife said"],
+  },
+  {
     phase: "newborn", week: 1,
     label: "Week 1 with your baby",
     do:    ["PLACEHOLDER — feeding little and often; safe sleep basics"],
