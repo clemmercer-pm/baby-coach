@@ -22,11 +22,11 @@
     return entry.phase === "newborn" ? 40 + entry.week : entry.week;
   }
 
-  // Where are you today, on that same axis?
+  // Where are you today, on that same axis? 40 = due date.
   function currentIndex(dueDate, today) {
     var weeksToDue = (dueDate - today) / MS_PER_WEEK;
-    if (weeksToDue >= 0) return 40 - weeksToDue;      // still pregnant
-    return 40 + Math.abs(weeksToDue);                  // baby's here (approx from due date)
+    if (weeksToDue >= 0) return 40 - weeksToDue;   // still pregnant
+    return 40 + Math.abs(weeksToDue);              // past the due date (approx from due date)
   }
 
   function ordered() {
@@ -34,23 +34,39 @@
   }
 
   // The current focus = the latest entry you've reached.
+  // Returns null if you're earlier than the whole roadmap (nothing reached yet).
   function pickCurrent(list, nowIndex) {
-    var current = list[0];
+    var current = null;
     for (var i = 0; i < list.length; i++) {
       if (sortIndex(list[i]) <= nowIndex + 0.5) current = list[i];
     }
     return current;
   }
 
-  function nextThree(list, current) {
-    var start = list.indexOf(current);
-    return list.slice(start + 1, start + 4);
+  // The next few entries after where you are now.
+  function upcoming(list, current) {
+    var start = current ? list.indexOf(current) + 1 : 0;
+    return list.slice(start, start + 3);
+  }
+
+  // "in about 3 weeks" / "in about a week" / "this week".
+  function relativeLabel(entry, nowIndex) {
+    var w = Math.round(sortIndex(entry) - nowIndex);
+    if (w <= 0) return "this week";
+    if (w === 1) return "in about a week";
+    return "in about " + w + " weeks";
   }
 
   function stageText(nowIndex) {
-    if (nowIndex < 40) return "You're about " + Math.round(nowIndex) + " weeks pregnant";
+    if (nowIndex < 40) {
+      var w = Math.floor(nowIndex);
+      var d = Math.round((nowIndex - w) * 7);
+      if (d === 7) { w += 1; d = 0; }
+      return "You're about " + w + " weeks" + (d ? " + " + d + " day" + (d > 1 ? "s" : "") : "") + " pregnant";
+    }
     var wk = Math.round(nowIndex - 40);
-    return wk <= 0 ? "Around your due date" : "About " + wk + " week" + (wk > 1 ? "s" : "") + " since your due date";
+    if (wk <= 0) return "Around your due date";
+    return "About " + wk + " week" + (wk > 1 ? "s" : "") + " into life with your baby (estimated from your due date)";
   }
 
   // --- Rendering ---
@@ -77,10 +93,23 @@
       groupHtml("Worth noting", entry.note) + flag;
   }
 
-  function renderComingUp(entries) {
-    if (!entries.length) { comingUp.innerHTML = "<p>You're at the end of the v1 roadmap.</p>"; return; }
+  // Shown when you're earlier than the first roadmap entry.
+  function renderBeforeRoadmap(firstEntry) {
+    thisWeekLabel.textContent = "Your weekly roadmap starts soon";
+    thisWeekBody.innerHTML =
+      "<p>Baby Coach's week-by-week guidance kicks in from <strong>" +
+      escapeHtml(firstEntry.label) + "</strong>. Here's what's on the horizon — nothing to do just yet.</p>";
+  }
+
+  function renderComingUp(entries, nowIndex) {
+    if (!entries.length) {
+      comingUp.innerHTML =
+        "<div class=\"coming-up__item\"><div class=\"coming-up__what\">You've reached the end of the current roadmap. More stages are coming in a future update.</div></div>";
+      return;
+    }
     comingUp.innerHTML = entries.map(function (e) {
-      return '<div class="coming-up__item"><div class="coming-up__when">Next</div>' +
+      return '<div class="coming-up__item">' +
+             '<div class="coming-up__when">' + escapeHtml(relativeLabel(e, nowIndex)) + "</div>" +
              '<div class="coming-up__what">' + escapeHtml(e.label) + "</div></div>";
     }).join("");
   }
@@ -94,14 +123,13 @@
   // --- Flow ---
 
   function show(dueDate) {
-    var now = new Date();
-    var nowIndex = currentIndex(dueDate, now);
+    var nowIndex = currentIndex(dueDate, new Date());
     var list = ordered();
     var current = pickCurrent(list, nowIndex);
 
     stageLine.textContent = stageText(nowIndex);
-    renderCurrent(current);
-    renderComingUp(nextThree(list, current));
+    if (current) { renderCurrent(current); } else { renderBeforeRoadmap(list[0]); }
+    renderComingUp(upcoming(list, current), nowIndex);
 
     setup.hidden = true;
     roadmap.hidden = false;
@@ -112,20 +140,48 @@
     setup.hidden = false;
   }
 
+  // Guard against nonsense dates (typos, wrong year).
+  function isPlausibleDueDate(date) {
+    if (isNaN(date.getTime())) return false;
+    var weeksAway = (date - new Date()) / MS_PER_WEEK;
+    return weeksAway <= 40 && weeksAway >= -12; // up to full pregnancy ahead, ~3 months past
+  }
+
   function init() {
     var saved = localStorage.getItem(STORAGE_KEY);
     if (saved) { show(new Date(saved)); } else { askForDate(); }
 
     document.getElementById("saveDate").addEventListener("click", function () {
       if (!dueInput.value) { dueInput.focus(); return; }
+      var date = new Date(dueInput.value);
+      if (!isPlausibleDueDate(date)) {
+        setInputError("That date looks off — please check the year.");
+        return;
+      }
+      clearInputError();
       localStorage.setItem(STORAGE_KEY, dueInput.value);
-      show(new Date(dueInput.value));
+      show(date);
     });
 
     document.getElementById("changeDate").addEventListener("click", function () {
       dueInput.value = localStorage.getItem(STORAGE_KEY) || "";
+      clearInputError();
       askForDate();
     });
+  }
+
+  function setInputError(msg) {
+    clearInputError();
+    var p = document.createElement("p");
+    p.id = "dateError";
+    p.className = "setup__error";
+    p.textContent = msg;
+    dueInput.insertAdjacentElement("afterend", p);
+  }
+
+  function clearInputError() {
+    var existing = document.getElementById("dateError");
+    if (existing) existing.remove();
   }
 
   if (document.readyState === "loading") {
