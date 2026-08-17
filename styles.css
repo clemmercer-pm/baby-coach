@@ -75,6 +75,27 @@ body {
 .this-week { border-color: var(--accent-soft); }
 .card__title { margin: 0 0 14px; font-size: 1.35rem; }
 
+.this-week__summary { margin: 0 0 16px; color: var(--muted); }
+
+/* "This week's focus" mini-guide */
+.focus-box {
+  background: var(--accent-soft); border: 1px solid #d7e5dd;
+  border-radius: 12px; padding: 16px 18px; margin: 18px 0 4px;
+}
+.focus-box__title { margin: 0 0 6px; font-weight: 700; }
+.focus-box__intro { margin: 0 0 10px; font-size: .95rem; }
+.focus-box__list { margin: 0; padding-left: 18px; }
+.focus-box__list li { margin-bottom: 6px; }
+
+/* Further reading */
+.links { margin-top: 18px; }
+.links__label {
+  margin: 0 0 6px; font-size: .8rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .05em; color: var(--muted);
+}
+.links__link { display: block; color: var(--accent); text-decoration: none; padding: 3px 0; }
+.links__link:hover { text-decoration: underline; }
+
 .focus__group { margin-bottom: 14px; }
 .focus__group:last-child { margin-bottom: 0; }
 .focus__label {

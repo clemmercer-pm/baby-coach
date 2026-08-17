@@ -102,12 +102,32 @@
 
   function renderCurrent(entry) {
     thisWeekLabel.textContent = entry.label;
-    var flag = hasPlaceholder(entry)
-      ? '<p class="placeholder">⚠ Placeholder content — real guidance lands on Day 34</p>' : "";
-    thisWeekBody.innerHTML =
-      groupHtml("Do this", entry.do) +
-      groupHtml("Watch for", entry.watch) +
-      groupHtml("Worth noting", entry.note) + flag;
+    var html = "";
+    if (entry.summary) html += '<p class="this-week__summary">' + escapeHtml(entry.summary) + "</p>";
+    html += groupHtml("Do this", entry.do) +
+            groupHtml("Watch for", entry.watch) +
+            groupHtml("Worth noting", entry.note);
+    if (entry.focus) html += focusHtml(entry.focus);
+    if (entry.links && entry.links.length) html += linksHtml(entry.links);
+    if (hasPlaceholder(entry)) html += '<p class="placeholder">⚠ Placeholder content — being written</p>';
+    thisWeekBody.innerHTML = html;
+  }
+
+  function focusHtml(focus) {
+    var items = (focus.list || []).map(function (t) { return "<li>" + escapeHtml(t) + "</li>"; }).join("");
+    return '<div class="focus-box">' +
+           '<p class="focus-box__title">' + escapeHtml(focus.title) + "</p>" +
+           (focus.intro ? '<p class="focus-box__intro">' + escapeHtml(focus.intro) + "</p>" : "") +
+           (items ? '<ul class="focus-box__list">' + items + "</ul>" : "") +
+           "</div>";
+  }
+
+  function linksHtml(links) {
+    var a = links.map(function (l) {
+      return '<a class="links__link" href="' + encodeURI(l.url) +
+             '" target="_blank" rel="noopener noreferrer">' + escapeHtml(l.label) + " ↗</a>";
+    }).join("");
+    return '<div class="links"><p class="links__label">Read more</p>' + a + "</div>";
   }
 
   function renderBeforeRoadmap(firstEntry) {
