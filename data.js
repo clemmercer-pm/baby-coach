@@ -136,7 +136,7 @@ const TIMELINE = [
       list: [
         "Rear-facing, in the back seat — legally until at least 15 months (many stay longer, which is safer).",
         "Never in a front seat with an active airbag — it's dangerous and illegal.",
-        "Only use approved seats — look for the 'E' in a circle and an R129 (i-Size) label.",
+        "Use only an approved seat — look for a UN R129 (i-Size) or ECE R44 label (an 'E' in a circle). Both are currently legal in the UK; i-Size is the newer, height-based standard.",
         "Use only the insert that came with the seat; don't add separate padding.",
         "Harness snug on the shoulders (about two fingers' gap), buckle sitting below the tummy.",
         "Get the fit checked — many retailers and safety schemes will check it for free."
@@ -251,7 +251,7 @@ const TIMELINE = [
   {
     phase: "newborn", week: 2, label: "Week 2 with your baby",
     summary: "This week's focus: the newborn checks and first admin.",
-    do: ["Expect baby to be back to birth weight around now; care usually moves from midwife to health visitor."],
+    do: ["Most babies are back to their birth weight by around 2 weeks — your midwife/health visitor will keep an eye on it. Care usually hands over from midwife to health visitor about now."],
     watch: ["Jaundice lasting beyond 2 weeks should be checked — contact your midwife, health visitor or GP.", "'Baby blues' (tearful, anxious, low) are common now and usually pass within 2 weeks."],
     note: ["Write down anything you want to raise with the health visitor."],
     focus: {
@@ -261,7 +261,7 @@ const TIMELINE = [
         "Newborn physical exam (NIPE) within 72 hours of birth — eyes, heart, hips and (if applicable) testicles checked.",
         "The day-5 blood-spot (heel-prick) test — screens for 10 rare but serious conditions.",
         "Cord care: keep it clean and dry, fold the nappy below it, let air get to it. It usually drops off in 5–15 days — don't pull it.",
-        "Register the birth (in England, within 42 days)."
+        "Register the birth (England & Wales: within 42 days; Scotland: within 21 days; Northern Ireland: within 42 days)."
       ]
     },
     links: [L.newborn, L.bloodSpot]
@@ -301,6 +301,7 @@ const TIMELINE = [
         "It's not just mums — around 1 in 10 partners develops postnatal depression too.",
         "Signs: persistent sadness, no enjoyment, exhaustion, trouble bonding, withdrawing, frightening thoughts.",
         "Getting help: talk to your GP or health visitor; in most areas you can self-refer to NHS talking therapies. Support for partners: PANDAS and Dad Matters.",
+        "Rarely, a new mother can develop postpartum psychosis (sudden confusion, hallucinations, or feeling manic) — this is a medical emergency: call 999 or go to A&E.",
         "If either of you has thoughts of harming yourself or the baby, get help urgently — call 111, or 999 in an emergency."
       ]
     },
