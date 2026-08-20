@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Baby Coach: your week-by-week roadmap</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=2" />
 </head>
 <body>
   <main class="app">
@@ -46,7 +46,8 @@
     <p>Guidance is general, NHS-informed, and assumes a straightforward pregnancy. If yours or your baby's has specific medical needs, your own team's advice always comes first. It never replaces your midwife, health visitor, or GP. Information reviewed August 2026.</p>
   </footer>
 
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+  <!-- ?v= is bumped on each deploy so browsers always fetch the latest, never a stale cache -->
+  <script src="data.js?v=2"></script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>
