@@ -1,4 +1,4 @@
-/* Baby Coach — v1 logic. No framework, no build step. */
+/* Baby Coach: v1 logic. No framework, no build step. */
 (function () {
   "use strict";
 
@@ -54,11 +54,11 @@
     return current;
   }
 
-  // Next few entries after where you are (drawn from the full list, so a
-  // pregnancy view can preview the newborn stages as "coming up").
+  // The next few *milestones* ahead (only weeks that carry a named milestone),
+  // so "coming up" shows what's significant rather than every sequential week.
   function upcoming(list, current) {
     var start = current ? list.indexOf(current) + 1 : 0;
-    return list.slice(start, start + 3);
+    return list.slice(start).filter(function (e) { return e.milestone; }).slice(0, 3);
   }
 
   function relativeLabel(entry, nowIndex) {
@@ -83,7 +83,7 @@
     }
     var over = Math.round(nowIndex - 40);
     if (over <= 0) return "Around your due date";
-    return "About " + over + " week" + (over > 1 ? "s" : "") + " past your due date — if baby's arrived, switch to “Baby's arrived” above";
+    return "About " + over + " week" + (over > 1 ? "s" : "") + " past your due date. If baby's arrived, switch to the “Baby's arrived” tab above.";
   }
 
   // --- Rendering ---
@@ -109,7 +109,7 @@
             groupHtml("Worth noting", entry.note);
     if (entry.focus) html += focusHtml(entry.focus);
     if (entry.links && entry.links.length) html += linksHtml(entry.links);
-    if (hasPlaceholder(entry)) html += '<p class="placeholder">⚠ Placeholder content — being written</p>';
+    if (hasPlaceholder(entry)) html += '<p class="placeholder">⚠ Placeholder content (being written)</p>';
     thisWeekBody.innerHTML = html;
   }
 
@@ -134,7 +134,7 @@
     thisWeekLabel.textContent = "Your weekly roadmap starts soon";
     thisWeekBody.innerHTML =
       "<p>Baby Coach's week-by-week guidance kicks in from <strong>" +
-      escapeHtml(firstEntry.label) + "</strong>. Here's what's on the horizon — nothing to do just yet.</p>";
+      escapeHtml(firstEntry.label) + "</strong>. Here's what's on the horizon. Nothing to do just yet.</p>";
   }
 
   function renderComingUp(entries, nowIndex) {
@@ -146,7 +146,7 @@
     comingUp.innerHTML = entries.map(function (e) {
       return '<div class="coming-up__item">' +
              '<div class="coming-up__when">' + escapeHtml(relativeLabel(e, nowIndex)) + "</div>" +
-             '<div class="coming-up__what">' + escapeHtml(e.label) + "</div></div>";
+             '<div class="coming-up__what">' + escapeHtml(e.milestone || e.label) + "</div></div>";
     }).join("");
   }
 
@@ -196,10 +196,10 @@
     var weeksAway = (date - new Date()) / MS_PER_WEEK;
     if (mode === "born") {
       if (weeksAway > 0.2) return "A birth date can't be in the future.";
-      if (weeksAway < -14) return "That's more than 3 months ago — outside this roadmap for now.";
+      if (weeksAway < -14) return "That's more than 3 months ago, which is outside this roadmap for now.";
     } else {
-      if (weeksAway > 40) return "That due date looks too far off — please check the year.";
-      if (weeksAway < -3) return "That due date is well in the past — has baby arrived? Try “Baby's arrived”.";
+      if (weeksAway > 40) return "That due date looks too far off. Please check the year.";
+      if (weeksAway < -3) return "That due date is well in the past. Has baby arrived? Try the “Baby's arrived” tab.";
     }
     return null;
   }
