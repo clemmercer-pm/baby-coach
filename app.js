@@ -180,7 +180,7 @@
     selectedMode = mode;
     dateLabel.textContent = mode === "born" ? "When was your baby born?" : "When's your due date?";
     dateInput.max = mode === "born" ? isoToday() : "";
-    dateInput.min = mode === "born" ? "" : isoToday();
+    dateInput.min = ""; // bounds are enforced by validate(); a hard min blocked overdue due dates
     for (var i = 0; i < toggleBtns.length; i++) {
       toggleBtns[i].classList.toggle("is-active", toggleBtns[i].getAttribute("data-mode") === mode);
     }
