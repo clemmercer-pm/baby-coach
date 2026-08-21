@@ -1,9 +1,9 @@
 /*
- * Baby Coach - timeline content.
+ * Baby Coach: timeline content.
  *
  * Each entry is one week on the roadmap:
  *   phase      "pregnancy" | "newborn"
- *   week       gestational week (pregnancy) or week-since-birth (newborn)
+ *   week       pregnancy: gestational week. newborn: WEEK OF LIFE (week 1 = days 0-6).
  *   label      heading shown for the week
  *   milestone  short name of the significant thing this week (drives "coming up")
  *   summary    one plain line orienting the week (optional)
@@ -214,14 +214,25 @@ const TIMELINE = [
     links: [L.induction, L.movements]
   },
 
-  // ---------------- Newborn / fourth trimester ----------------
+  // ---------------- Newborn / fourth trimester (WEEK OF LIFE: week 1 = days 0-6) ----------------
   {
-    phase: "newborn", week: 0, label: "The first few days",
-    milestone: "Safe sleep from night one",
-    summary: "The fourth trimester begins. Feeding, sleep, and a lot of watching.",
-    do: ["Lots of skin-to-skin and frequent feeds.", "Follow safe sleep from the very first night (see below)."],
-    watch: ["Jaundice usually appears around day 2 to 3. If it shows in the first 24 hours, or baby feeds poorly or is very sleepy, get same-day advice.", "Wet and dirty nappies: roughly, what goes in comes out."],
-    note: ["Birth weight, and anything the midwife flags."],
+    phase: "newborn", week: 1, label: "Week 1 with your baby",
+    milestone: "Safe sleep and the first checks",
+    summary: "The fourth trimester begins. Feeding, sleep, the first checks, and a lot of watching.",
+    do: [
+      "Lots of skin-to-skin, and feed little and often (at least 8 to 12 times in 24 hours).",
+      "Follow safe sleep from the very first night (see below).",
+      "Two checks happen this week: the newborn physical exam (NIPE) within 72 hours, and the blood-spot (heel-prick) test around day 5."
+    ],
+    watch: [
+      "Jaundice usually appears around day 2 to 3. If it shows in the first 24 hours, or baby feeds poorly or is very sleepy, get same-day advice.",
+      "Wet and dirty nappies: roughly, what goes in comes out."
+    ],
+    note: [
+      "Note the birth weight and anything the midwife flags.",
+      "Cord care: keep it clean and dry and fold the nappy below it; it usually drops off in 5 to 15 days, so don't pull it.",
+      "A light feed and nappy tally helps everyone catch problems early."
+    ],
     focus: {
       title: "Safe sleep, every sleep, from night one",
       intro: "The NHS safe-sleep basics that reduce the risk of SIDS:",
@@ -234,18 +245,25 @@ const TIMELINE = [
         "Smoke-free, and never sleep with baby on a sofa or armchair."
       ]
     },
-    links: [L.safeSleep, L.jaundice]
+    links: [L.safeSleep, L.jaundice, L.bloodSpot, L.newborn]
   },
   {
-    phase: "newborn", week: 1, label: "Week 1 with your baby",
+    phase: "newborn", week: 2, label: "Week 2 with your baby",
     milestone: "Getting feeding established",
-    summary: "This week's focus: getting feeding established.",
-    do: ["Feed little and often; keep to safe sleep every sleep.", "The newborn blood-spot (heel-prick) test is offered around day 5."],
-    watch: ["Jaundice, feeding, and nappies. Contact your midwife straight away if jaundice worsens or baby becomes very reluctant to feed."],
-    note: ["A light feed and nappy tally helps you and the midwife catch problems early."],
+    summary: "Feeding settles into a rhythm, and care hands over to your health visitor.",
+    do: [
+      "Keep feeding responsively, and keep to safe sleep every sleep.",
+      "Most babies are back to their birth weight by around 2 weeks; your midwife or health visitor keeps an eye on it. Care usually hands over to the health visitor about now.",
+      "Register the birth (England and Wales: within 42 days; Scotland: within 21 days; Northern Ireland: within 42 days)."
+    ],
+    watch: [
+      "Jaundice lasting beyond 2 weeks should be checked, so contact your midwife, health visitor or GP.",
+      "'Baby blues' (tearful, anxious, low) are common now and usually pass within 2 weeks."
+    ],
+    note: ["Write down anything you want to raise with the health visitor."],
     focus: {
-      title: "Feeding in the first days",
-      intro: "However you feed, the first days are about frequent feeds and learning baby's cues:",
+      title: "Feeding in the first weeks",
+      intro: "However you feed, these weeks are about frequent feeds and learning baby's cues:",
       list: [
         "Feed responsively: watch for early hunger cues (rooting, hand-to-mouth). Crying is a late sign.",
         "Newborns feed a lot: at least 8 to 12 times in 24 hours, sometimes hourly at first.",
@@ -255,31 +273,12 @@ const TIMELINE = [
         "Signs it's going well: plenty of wet and dirty nappies, and steady weight gain."
       ]
     },
-    links: [L.feedFirst, L.bloodSpot, L.safeSleep]
-  },
-  {
-    phase: "newborn", week: 2, label: "Week 2 with your baby",
-    milestone: "Newborn checks & registering the birth",
-    summary: "This week's focus: the newborn checks and first admin.",
-    do: ["Most babies are back to their birth weight by around 2 weeks, and your midwife or health visitor will keep an eye on it. Care usually hands over from midwife to health visitor about now."],
-    watch: ["Jaundice lasting beyond 2 weeks should be checked, so contact your midwife, health visitor or GP.", "'Baby blues' (tearful, anxious, low) are common now and usually pass within 2 weeks."],
-    note: ["Write down anything you want to raise with the health visitor."],
-    focus: {
-      title: "Newborn checks and first admin",
-      intro: "A few one-off things cluster in the first couple of weeks:",
-      list: [
-        "Newborn physical exam (NIPE) within 72 hours of birth: eyes, heart, hips and (if applicable) testicles checked.",
-        "The day-5 blood-spot (heel-prick) test, which screens for 10 rare but serious conditions.",
-        "Cord care: keep it clean and dry, fold the nappy below it, let air get to it. It usually drops off in 5 to 15 days, so don't pull it.",
-        "Register the birth (England and Wales: within 42 days; Scotland: within 21 days; Northern Ireland: within 42 days)."
-      ]
-    },
-    links: [L.newborn, L.bloodSpot]
+    links: [L.feedFirst]
   },
   {
     phase: "newborn", week: 3, label: "Week 3 with your baby",
     milestone: "Coping with crying",
-    summary: "This week's focus: crying, and how to cope with it.",
+    summary: "Often the peak of crying, and it's normal. This week's focus: how to cope.",
     do: ["Keep feeding on demand; get outside a little, as it helps you as much as baby."],
     watch: ["Fever, poor feeding, or an unusually floppy or listless baby always warrants a call to 111 or your GP."],
     note: ["How you're both doing matters too, so see next week's mental-health focus."],
@@ -328,10 +327,10 @@ const TIMELINE = [
     links: [L.vaccine6in1]
   },
   {
-    phase: "newborn", week: 6, label: "Week 6: the 6-week checks",
+    phase: "newborn", week: 6, label: "Week 6 with your baby",
     milestone: "The 6 to 8 week checks",
-    summary: "This week's focus: the reviews and first vaccinations.",
-    do: ["Attend baby's 6 to 8 week review (a health-visitor review plus a GP physical check)."],
+    summary: "This week's focus: the reviews and first vaccinations coming up.",
+    do: ["Get ready for baby's 6 to 8 week review (a health-visitor review plus a GP physical check), due from around now to 8 weeks."],
     watch: ["Raise any feeding, sleep, or development worries at the review, as that's what it's for."],
     note: ["Have your own postnatal check too, since how you're feeling counts, not just the physical."],
     focus: {

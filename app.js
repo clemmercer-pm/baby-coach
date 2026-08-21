@@ -23,9 +23,11 @@
 
   // --- Timeline maths ---
 
-  // One shared axis: 40 = due date. Pregnancy week w -> w. Newborn week w -> 40 + w.
+  // One shared axis, with 40 = the due-date / birth boundary. Pregnancy week w -> w
+  // (30..40, standard gestational weeks). Newborn is counted as "week of life"
+  // (week 1 = days 0-6), sitting right after the boundary: newborn week W -> 40 + (W - 1).
   function sortIndex(entry) {
-    return entry.phase === "newborn" ? 40 + entry.week : entry.week;
+    return entry.phase === "newborn" ? 40 + (entry.week - 1) : entry.week;
   }
 
   // Where you are today on that axis, given your mode + date.
